@@ -47,41 +47,36 @@ Be Empathetic.
 Provide Step-by-Step Solutions.
 Offer Additional Help if Needed.'`;
 
-export async function POST(req){
-    const openai = new OpenAI();
-    const data = await req.json();
-
-    const completion = await openai.chat.completions.create({
-        message: [
-        {
-            role: 'system',
-            content: systemPrompt
-        },
-        ...data,
-    ], 
-    model: 'gpt-4o-mini',
-    stream: true,
+const openai = new OpenAI({
+    baseURL: "https://openrouter.ai/api/v1",
+    apiKey: process.env.OPENROUTER_API_KEY,
 })
+export async function POST (req) {
+    const data = await req.json();
+    const completion = await openai.chat.completions.create({
+        model: "meta-llama/llama-3.1-8b-instruct:free",
+        messages: [{ role: "system", content: systemPrompt }, ...data],
+        stream: true,
+    })
 
-const stream = new ReadableStream({
-    async start(controller) {
-        const encoder = new TextEncoder()
-        try {
-            for await (const chunk of completion.stream()) {
-                const content = chunk.choices[0]?.delta?.content
-                if (content) {
-                    const text = encoder.encode(content)
-                    controller.enqueue(text)
+    const stream = new ReadableStream({
+        async start(controller) {
+            const encoder = new TextEncoder()
+            try {
+                for await (const chunk of completion) {
+                    const content = chunk.choices[0]?.delta?.content
+                    if (content) {
+                        const text = encoder.encode(content)
+                        controller.enqueue(text)
+                    }
                 }
+            } catch(err) {
+                controller.error(err)
+            } finally {
+                controller.close()
             }
-        }
-        catch (error) {
-            controller.error(error)
-        } finally {
-            controller.close()
-        }
-    },
-});
+        },
+    })
 
-return new NextResponse(stream);
+    return new NextResponse(stream)
 }
