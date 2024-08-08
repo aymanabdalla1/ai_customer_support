@@ -50,6 +50,7 @@ export default function Home() {
 
   return (
     <Box
+      bgcolor="#DEE1E1"
       width="100vw"
       height="100vh"
       display="flex"
@@ -58,10 +59,12 @@ export default function Home() {
       alignItems="center"
     >
       <Stack
+      bgcolor="white"
         direction="column"
         width="600px"
-        height="700px"
+        height="800px"
         border="1px solid black"
+        borderRadius={7}
         p={2}
         spacing={2}
       >
@@ -84,7 +87,7 @@ export default function Home() {
                 bgcolor={
                   messages.role === "assistant"
                     ? "primary.main"
-                    : "secondary.main"
+                    : "green"
                 }
                 color="white"
                 borderRadius={16}
