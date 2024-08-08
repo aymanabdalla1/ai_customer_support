@@ -48,10 +48,10 @@ Provide Step-by-Step Solutions.
 Offer Additional Help if Needed.'`;
 
 export async function POST(req){
-    const openai = new OpenAI(process.env.OPENAI_API_KEY);
+    const openai = new OpenAI();
     const data = await req.json();
 
-    const completion = await openai.completions.create({
+    const completion = await openai.chat.completions.create({
         message: [
         {
             role: 'system',
