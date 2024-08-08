@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Stack, TextField, Button } from "@mui/material";
+import { Box, Stack, TextField, Button, Typography, Avatar } from "@mui/material";
 import { useEffect, useState, useRef} from "react";
 
 export default function Home() {
@@ -95,14 +95,35 @@ useEffect(() => {
       <Stack
         bgcolor="white"
         direction="column"
-        width="600px"
+        width="650px"
         height="800px"
         border="2px solid black"
         borderRadius={7}
         p={2}
         spacing={2}
       >
-        
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          p={1}
+          spacing={2}
+        >
+          <Box textAlign="center">
+            <Typography
+              fontFamily="Raleway, Arial"
+              fontWeight="bold"
+              fontSize={20}
+            >
+              HeadStarter Support Agent
+            </Typography>
+          </Box>
+          <Avatar
+            alt="HeadStarter"
+            src="cant-find-image"
+            sx={{ width: 56, height: 56 }}
+          />
+        </Stack>
         <Stack
           direction="column"
           spacing={2}
@@ -111,46 +132,46 @@ useEffect(() => {
           maxHeight="100%"
         >
           {messages
-          .filter((message) => message.content.trim() !== "")
-          .map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === "assistant" ? "flex-start" : "flex-end"
-              }
-            >
+            .filter((message) => message.content.trim() !== "")
+            .map((message, index) => (
               <Box
-                bgcolor={
-                  message.role === "assistant"
-                    ? "primary.main"
-                    : "	#4ac925"
+                key={index}
+                display="flex"
+                justifyContent={
+                  message.role === "assistant" ? "flex-start" : "flex-end"
                 }
-                color="white"
-                borderRadius={16}
-                p={3}
               >
-                {message.content}
+                <Box
+                  bgcolor={
+                    message.role === "assistant" ? "primary.main" : "	#4ac925"
+                  }
+                  color="white"
+                  borderRadius={14}
+                  p={3}
+                >
+                  {message.content}
+                </Box>
               </Box>
-            </Box>
-          ))}
+            ))}
           <div ref={messagesEndRef} />
         </Stack>
         <Stack direction="row" spacing={2}>
           <TextField
-          label="Type a message"
-          fullWidth
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          disabled={isLoading}/>
+            label="Type a message"
+            fullWidth
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            disabled={isLoading}
+          />
           <Button
             variant="contained"
             onClick={sendMessage}
-            disabled={isLoading}>
-              {isLoading ? 'Sending...' : 'Send'}
-            </Button>
-          </Stack>
+            disabled={isLoading}
+          >
+            {isLoading ? "Sending..." : "Send"}
+          </Button>
+        </Stack>
       </Stack>
     </Box>
   );
