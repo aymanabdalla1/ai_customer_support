@@ -95,8 +95,8 @@ useEffect(() => {
       <Stack
         bgcolor="white"
         direction="column"
-        width="650px"
-        height="800px"
+        width="900px"
+        height="1000px"
         border="2px solid black"
         borderRadius={7}
         p={2}
