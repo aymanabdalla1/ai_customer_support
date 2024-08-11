@@ -11,20 +11,6 @@ export default function Home() {
 
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false)
-  const [displayedText, setDisplayedText] = useState('');
-
-  const typeText = (text) => {
-    let index = 0;
-    setDisplayedText('');
-    const interval = setInterval(() => {
-      if (index < text.length) {
-        setDisplayedText((prev) => prev + text[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 50); // Adjust the speed by changing the interval time
-  };
 
   const sendMessage = async () => {
     if (!message.trim() || isLoading) return;
@@ -93,12 +79,6 @@ const scrollToBottom = () => {
 }
 
 useEffect(() => {
-  if (messages.length > 0) {
-    const lastMessage = messages[messages.length - 1];
-    if (lastMessage.role === 'assistant') {
-      typeText(lastMessage.content);
-    }
-  }
   scrollToBottom()
 }, [messages])
 
