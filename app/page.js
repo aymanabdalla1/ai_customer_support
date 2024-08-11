@@ -99,7 +99,7 @@ useEffect(() => {
       typeText(lastMessage.content);
     }
   }
-  // scrollToBottom()
+  scrollToBottom()
 }, [messages])
 
   return (
