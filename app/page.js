@@ -153,6 +153,18 @@ useEffect(() => {
                 </Box>
               </Box>
             ))}
+          {isLoading && (
+            <Box display="flex" justifyContent="flex-start">
+              <Box
+                bgcolor="primary.main"
+                color="white"
+                borderRadius={14}
+                p={3}
+              >
+                {message.trim() !== "" ? "Sending..." : "AI is typing..."}
+              </Box>
+            </Box>
+          )}
           <div ref={messagesEndRef} />
         </Stack>
         <Stack direction="row" spacing={2}>
